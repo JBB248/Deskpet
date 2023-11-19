@@ -15,7 +15,8 @@
 
 	<!-- ____________________________ Window Settings ___________________________ -->
 
-	<window width="1280" height="720" fps="60" hardware="true" orientation="landscape" alwaysOnTop="true"/>
+	<window width="1280" height="720" fps="60" hardware="true" orientation="landscape"/>
+	<window alwaysOnTop="true" unless="debug"/>
 
 	<!-- _____________________________ Path Settings ____________________________ -->
 
@@ -42,7 +43,7 @@
 	<!--Disable the Flixel core focus lost screen-->
 	<haxedef name="FLX_NO_FOCUS_LOST_SCREEN"/>
 
-	<!--Disable the Flixel core debugger. Automatically gets set whenever you compile in release mode!-->
+	<!--Disable the Flixel core debugger-->
 	<haxedef name="FLX_NO_DEBUG" unless="debug"/>
 
 	<!--Enable this for Nape release builds for a serious peformance improvement-->
@@ -55,5 +56,4 @@
 	<!-- <icon path="" size="64"/> -->
 
 	<error value="Only Windows is supported!" unless="windows"/>
-	<error value="Debug mode is not supported!" if="debug"/>
 </project>

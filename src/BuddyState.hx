@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxObject;
+import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
@@ -12,6 +13,10 @@ class BuddyState extends FlxState
 
 	override public function create()
 	{
+		#if debug
+		add(new FlxSprite(0, 0, AssetPaths.windows_xp_bliss__png));
+		#end
+
 		border = new FlxTypedGroup();
 		border.add(new FlxObject(-1, -1, 1, FlxG.height)); // Left wall
 		border.add(new FlxObject(-1, -1, FlxG.width, 1)); // Top Wall

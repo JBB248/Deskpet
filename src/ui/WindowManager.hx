@@ -33,11 +33,13 @@ class WindowManager
     @:allow(Main.new)
     static function init(color:Int = 0xFF010101)
     {
-		reserveColor = color;
 		resolution = FlxPoint.get(Capabilities.screenResolutionX, Capabilities.screenResolutionY);
+        #if !debug
+		reserveColor = color;
 		resize(Std.int(resolution.x), Std.int(resolution.y));
 		move(0, 0);
         setBorderless(true);
+        #end
     }
 
     /**
