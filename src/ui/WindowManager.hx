@@ -16,7 +16,9 @@ class WindowManager
 	public static var resolution(default, null):FlxPoint;
 
     /**
-     * The color used to clear the application background
+     * The color used to clear the application background.
+     *
+     * NOTE: All semi-transparent pixels will become this color
      */
     public static var reserveColor(default, set):Int;
 
