@@ -54,7 +54,7 @@ class WindowManager
         SetWindowPos(hWnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);'
         #end
     )
-    static function removePixels(red:Int = 0, green:Int = 0, blue:Int = 0):Void {}
+    static function removePixels(red:Int = 0, green:Int = 0, blue:Int = 0):Void { }
 
 	/**
 	 * Sets all previously transparent pixels opaque
@@ -70,7 +70,7 @@ class WindowManager
         SetWindowPos(hWnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);'
         #end
     )
-	static function restorePixels():Void {}
+	static function restorePixels():Void { }
 
     /**
      * Resizes the application window
@@ -110,5 +110,37 @@ class WindowManager
         SetWindowPos(hWnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);'
         #end
     )
-    public static function setBorderless(value:Bool):Void {}
+    public static function setBorderless(value:Bool):Void { }
+
+    /**
+     * Gets the mouse x-position relative to the screen
+     */
+	@:functionCode(
+        #if windows 
+       'POINT p;
+        if(!GetCursorPos(&p)) 
+            return -1;
+        return p.x;' 
+        #end
+    )
+	public static function getCursorX():Int
+	{
+		return -1;
+	}
+
+    /**
+     * Gets the mouse y-position relative to the screen
+     */
+    @:functionCode(
+        #if windows 
+       'POINT p;
+        if(!GetCursorPos(&p)) 
+            return -1;
+        return p.y;' 
+        #end
+    )
+	public static function getCursorY():Int
+	{
+		return -1;
+	}
 }
