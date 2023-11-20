@@ -13,7 +13,7 @@ import openfl.system.Capabilities;
 )
 class WindowManager
 {
-	public static var resolution(default, null):FlxPoint;
+	public static var resolution(default, null):FlxPoint = FlxPoint.get(FlxG.width, FlxG.height);
 
     /**
      * The color used to clear the application background.
@@ -34,12 +34,10 @@ class WindowManager
     static function init(color:Int = 0xFF010101)
     {
 		resolution = FlxPoint.get(Capabilities.screenResolutionX, Capabilities.screenResolutionY);
-        #if !debug
 		reserveColor = color;
 		resize(Std.int(resolution.x), Std.int(resolution.y));
 		move(0, 0);
-        setBorderless(true);
-        #end
+		setBorderless(true);
     }
 
     /**
@@ -51,7 +49,7 @@ class WindowManager
         #if windows
        'HWND hWnd = GetActiveWindow();
 
-        SetWindowLong(hWnd, GWL_EXSTYLE, GetWindowLong(hWnd, GWL_EXSTYLE) | WS_EX_LAYERED);
+        SetWindowLongPtrW(hWnd, GWL_EXSTYLE, GetWindowLong(hWnd, GWL_EXSTYLE) | WS_EX_LAYERED);
         SetLayeredWindowAttributes(hWnd, RGB(red, green, blue), 0, LWA_COLORKEY);
         SetWindowPos(hWnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);'
         #end
@@ -67,7 +65,7 @@ class WindowManager
         #if windows
        'HWND hWnd = GetActiveWindow();
 
-        SetWindowLong(hWnd, GWL_EXSTYLE, GetWindowLong(hWnd, GWL_EXSTYLE) ^ WS_EX_LAYERED);
+        SetWindowLongPtrW(hWnd, GWL_EXSTYLE, GetWindowLong(hWnd, GWL_EXSTYLE) ^ WS_EX_LAYERED);
         RedrawWindow(hWnd, NULL, NULL, RDW_ERASE | RDW_INVALIDATE | RDW_FRAME);
         SetWindowPos(hWnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);'
         #end
@@ -107,8 +105,8 @@ class WindowManager
             lEXStyle |= (WS_EX_DLGMODALFRAME | WS_EX_CLIENTEDGE | WS_EX_STATICEDGE);
         }
 
-        SetWindowLong(hWnd, GWL_STYLE, lStyle);
-        SetWindowLong(hWnd, GWL_EXSTYLE, lEXStyle);
+        SetWindowLongPtrW(hWnd, GWL_STYLE, lStyle);
+        SetWindowLongPtrW(hWnd, GWL_EXSTYLE, lEXStyle);
         SetWindowPos(hWnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);'
         #end
     )
