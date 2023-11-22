@@ -15,11 +15,26 @@ class Border extends FlxTypedGroup<FlxObject>
     {
         super(4);
 
-		add(new FlxObject(-1, -1, 1, FlxG.height));
-		add(new FlxObject(-1, -1, FlxG.width, 1));
-		add(new FlxObject(-1, FlxG.height, FlxG.width, 1));
-		add(new FlxObject(FlxG.width, -1, 1, FlxG.height));
-    }
+		var wall = new FlxObject(-1, -1, 1, FlxG.height);
+		wall.allowCollisions = RIGHT;
+		wall.immovable = true;
+		add(wall);
+
+		wall = new FlxObject(-1, -1, FlxG.width, 1);
+		wall.allowCollisions = DOWN;
+		wall.immovable = true;
+		add(wall);
+
+		wall = new FlxObject(-1, FlxG.height, FlxG.width, 1);
+		wall.allowCollisions = UP;
+		wall.immovable = true;
+		add(wall);
+
+		wall = new FlxObject(FlxG.width, -1, 1, FlxG.height);
+		wall.allowCollisions = LEFT;
+		wall.immovable = true;
+		add(wall);
+	}
 
     function get_leftWall():FlxObject
     {
