@@ -55,5 +55,6 @@
 	<!-- <icon path="" size="32"/> -->
 	<!-- <icon path="" size="64"/> -->
 
-	<error value="Only Windows is supported!" unless="windows"/>
+	<error value="This project is designed only for desktop!" unless="desktop"/>
+	<error value="Only Windows OS is currently supported!" unless="windows"/>
 </project>
