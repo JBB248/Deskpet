@@ -25,7 +25,7 @@
 	<set name="BUILD_DIR" value="export/beta-debug" if="debug"/>
 
 	<!-- Release build -->
-	<set name="BUILD_DIR" value="export/alpha" if="final"/> 
+	<!-- <set name="BUILD_DIR" value="export/alpha" if="release"/> --> 
 
 	<source path="src" />
 	<assets path="assets" />
