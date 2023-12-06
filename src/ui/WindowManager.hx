@@ -22,6 +22,7 @@ class WindowManager
      */
     public static var reserveColor(default, set):Int;
 
+    @:noCompletion
     static function set_reserveColor(value:Int):Int
     {
         restorePixels();
@@ -54,6 +55,7 @@ class WindowManager
         SetWindowPos(hWnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);'
         #end
     )
+    @:noCompletion
     static function removePixels(red:Int = 0, green:Int = 0, blue:Int = 0):Void { }
 
 	/**
@@ -70,6 +72,7 @@ class WindowManager
         SetWindowPos(hWnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);'
         #end
     )
+    @:noCompletion
 	static function restorePixels():Void { }
 
     /**
@@ -115,6 +118,7 @@ class WindowManager
     /**
      * Gets the mouse x-position relative to the screen
      */
+    #if (!debug)
 	@:functionCode(
         #if windows 
        'POINT p;
@@ -123,14 +127,16 @@ class WindowManager
         return p.x;' 
         #end
     )
+    #end
 	public static function getCursorX():Int
 	{
-		return -1;
+		return FlxG.mouse.screenX;
 	}
 
     /**
      * Gets the mouse y-position relative to the screen
      */
+    #if (!debug)
     @:functionCode(
         #if windows 
        'POINT p;
@@ -139,8 +145,9 @@ class WindowManager
         return p.y;' 
         #end
     )
+    #end
 	public static function getCursorY():Int
 	{
-		return -1;
+		return FlxG.mouse.screenY;
 	}
 }
