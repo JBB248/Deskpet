@@ -1,6 +1,5 @@
 package;
 
-import flixel.tweens.FlxEase;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -16,6 +15,8 @@ class BuddySprite extends FlxSprite
     public var border(default, null):Border = new Border();
 
     var _stateWatcher:FlxFSM<BuddySprite>;
+
+    public var lastClicked(default, null):Int = -1;
 
     public function new(X:Int = 0, Y:Int = 0)
     {
@@ -47,11 +48,12 @@ class BuddySprite extends FlxSprite
 
     override public function update(elapsed:Float):Void
     {
-        FlxG.collide(this, border, _stateWatcher.state != null ? cast(_stateWatcher.state, BuddyState).onCollide : null);
+        FlxG.collide(this, border, _stateWatcher.state != null ? (cast _stateWatcher.state).onCollide : null);
 
         super.update(elapsed);
 
         _stateWatcher.update(elapsed);
+        lastClicked = FlxG.mouse.justPressedTimeInTicks;
 
         if(!isOnScreen()) // For now, just bring him back if he falls off-screen
             screenCenter();
@@ -72,6 +74,13 @@ class Condition
     public static function grabbed(sprite:BuddySprite):Bool
     {
         return FlxG.mouse.pressed && FlxG.mouse.overlaps(sprite);
+    }
+
+    public static inline var DELTACLICK:Int = 400; // 0.4 seconds
+
+    public static function doubleClicked(sprite:BuddySprite):Bool
+    {
+        return FlxG.mouse.justPressedTimeInTicks - sprite.lastClicked > 0 && FlxG.mouse.justPressedTimeInTicks - sprite.lastClicked <= Condition.DELTACLICK;
     }
 }
 
