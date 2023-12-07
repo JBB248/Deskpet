@@ -16,7 +16,7 @@
 	<!-- ____________________________ Window Settings ___________________________ -->
 
 	<window width="1280" height="720" fps="60" hardware="true" orientation="landscape"/>
-	<window alwaysOnTop="true" unless="debug"/>
+	<window width="1920" height="1080" alwaysOnTop="true" unless="debug"/>
 
 	<!-- _____________________________ Path Settings ____________________________ -->
 

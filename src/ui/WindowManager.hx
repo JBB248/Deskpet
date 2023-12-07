@@ -1,9 +1,7 @@
 package ui;
 
 import flixel.FlxG;
-import flixel.math.FlxPoint;
 import openfl.Lib;
-import openfl.system.Capabilities;
 
 @:cppFileCode(
     #if windows
@@ -13,7 +11,7 @@ import openfl.system.Capabilities;
 )
 class WindowManager
 {
-	public static var resolution(default, null):FlxPoint = FlxPoint.get(FlxG.width, FlxG.height);
+	public static var resolution(default, never) = #if debug {x: 1280, y: 720}; #else {x: 1920, y: 1080}; #end
 
     /**
      * The color used to clear the application background.
@@ -34,9 +32,8 @@ class WindowManager
     @:allow(Main.new)
     static function init(color:Int = 0xFF010101)
     {
-		resolution = FlxPoint.get(Capabilities.screenResolutionX, Capabilities.screenResolutionY);
 		reserveColor = color;
-		resize(Std.int(resolution.x), Std.int(resolution.y));
+		resize(resolution.x, resolution.y);
 		move(0, 0);
 		setBorderless(true);
     }
@@ -75,17 +72,17 @@ class WindowManager
     @:noCompletion
 	static function restorePixels():Void { }
 
-    /**
-     * Resizes the application window
-     */
-    public static inline function resize(width:Int, height:Int)
-        FlxG.resizeWindow(width, height);
-
 	/**
 	 * Moves the application window
 	 */
     public static inline function move(x:Int, y:Int)
         Lib.application.window.move(x, y);
+
+    /**
+     * Resizes the application window
+     */
+     public static inline function resize(width:Int, height:Int)
+        Lib.application.window.resize(width, height);
 
     /**
      * Adds or removes the window border depending on `value`.

@@ -2,6 +2,8 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxGame;
+import openfl.system.Capabilities;
+import ui.WindowManager;
 
 class Main extends openfl.display.Sprite
 {
@@ -9,12 +11,15 @@ class Main extends openfl.display.Sprite
 	{
 		super();
 
-		addChild(new FlxGame(0, 0, PlayState, true));
-
-		#if !debug
-		ui.WindowManager.init();
+		#if debug
+		addChild(new FlxGame(PlayState, true));
+		#else
+		WindowManager.resolution.x = Std.int(Capabilities.screenResolutionX);
+		WindowManager.resolution.y = Std.int(Capabilities.screenResolutionY);
+		addChild(new FlxGame(WindowManager.resolution.x, WindowManager.resolution.y, PlayState, true));
+		WindowManager.init();
 		#end
-		
+
 		FlxG.autoPause = false;
 		FlxG.mouse.useSystemCursor = true;
 	}
