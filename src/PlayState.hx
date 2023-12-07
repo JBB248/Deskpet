@@ -1,9 +1,10 @@
 package;
 
 import burst.BurstWindow;
+import burst.buddy.BuddySprite;
+
 import flixel.FlxG;
 import flixel.FlxState;
-import flixel.util.FlxColor;
 
 class PlayState extends FlxState
 {
