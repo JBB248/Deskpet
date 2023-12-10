@@ -1,6 +1,7 @@
 package ui;
 
 import flixel.FlxG;
+import lime.ui.Window;
 import openfl.Lib;
 
 @:cppFileCode(
@@ -11,7 +12,12 @@ import openfl.Lib;
 )
 class WindowManager
 {
-	public static var resolution(default, never) = #if debug {x: 1280, y: 720}; #else {x: 1920, y: 1080}; #end
+	public static var resolution(default, never) = {width: 1920, height: 1080};
+
+    public static var window(get, never):Window;
+
+    @:noCompletion static inline function get_window():Window
+        return Lib.application.window;
 
     /**
      * The color used to clear the application background.
@@ -20,8 +26,7 @@ class WindowManager
      */
     public static var reserveColor(default, set):Int;
 
-    @:noCompletion
-    static function set_reserveColor(value:Int):Int
+    @:noCompletion static function set_reserveColor(value:Int):Int
     {
         restorePixels();
         removePixels((value >> 16) & 0xff, (value >> 8) & 0xff, value & 0xff);
@@ -33,8 +38,8 @@ class WindowManager
     static function init(color:Int = 0xFF010101)
     {
 		reserveColor = color;
-		resize(resolution.x, resolution.y);
-		move(0, 0);
+        move(0, 0);
+		resize(resolution.width, resolution.height);
 		setBorderless(true);
     }
 
@@ -52,8 +57,7 @@ class WindowManager
         SetWindowPos(hWnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);'
         #end
     )
-    @:noCompletion
-    static function removePixels(red:Int = 0, green:Int = 0, blue:Int = 0):Void { }
+    @:noCompletion static function removePixels(red:Int = 0, green:Int = 0, blue:Int = 0):Void { }
 
 	/**
 	 * Sets all previously transparent pixels opaque
@@ -69,8 +73,7 @@ class WindowManager
         SetWindowPos(hWnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);'
         #end
     )
-    @:noCompletion
-	static function restorePixels():Void { }
+    @:noCompletion static function restorePixels():Void { }
 
 	/**
 	 * Moves the application window
@@ -81,7 +84,7 @@ class WindowManager
     /**
      * Resizes the application window
      */
-     public static inline function resize(width:Int, height:Int)
+    public static inline function resize(width:Int, height:Int)
         Lib.application.window.resize(width, height);
 
     /**
@@ -125,10 +128,7 @@ class WindowManager
         #end
     )
     #end
-	public static function getCursorX():Int
-	{
-		return FlxG.mouse.screenX;
-	}
+	public static function getCursorX():Int return FlxG.mouse.screenX;
 
     /**
      * Gets the mouse y-position relative to the screen
@@ -143,8 +143,5 @@ class WindowManager
         #end
     )
     #end
-	public static function getCursorY():Int
-	{
-		return FlxG.mouse.screenY;
-	}
+	public static function getCursorY():Int return FlxG.mouse.screenY;
 }
