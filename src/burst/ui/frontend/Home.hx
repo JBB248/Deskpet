@@ -1,8 +1,8 @@
 package burst.ui.frontend;
 
-import sys.FileSystem;
 import haxe.xml.Access;
-import openfl.utils.Assets;
+import sys.FileSystem;
+import sys.io.File;
 
 class Home
 {
@@ -45,7 +45,7 @@ class Home
         if(!FileSystem.exists(key))
             throw 'Add-on lacks a "home" file';
 
-        var xml = Xml.parse(Assets.getText(key));
+        var xml = Xml.parse(File.getContent(key));
         var data = new Access(xml);
 
         readHead(data);

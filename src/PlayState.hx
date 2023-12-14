@@ -19,7 +19,7 @@ class PlayState extends FlxState
 		buddy.screenCenter();
 		add(buddy);
 
-		var window = new BurstWindow();
+		var window = new BurstWindow(0, 0, "debug");
 		insert(members.indexOf(buddy), window);
 	}
 
