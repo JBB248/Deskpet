@@ -2,7 +2,6 @@ package burst.fsm.states;
 
 import burst.fsm.StatefulSprite;
 
-import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.util.FlxFSM;
 import flixel.tweens.FlxTween;

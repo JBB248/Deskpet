@@ -15,7 +15,7 @@ class BaseState extends FlxFSMState<StatefulSprite>
     override public function enter(owner:StatefulSprite, fsm:FlxFSM<StatefulSprite>):Void
     {
         #if debug
-        flixel.FlxG.log.add("Entered: " + Type.getClassName(Type.getClass(this)));
+        FlxG.log.add("Entered: " + Type.getClassName(Type.getClass(this)));
         #end
     }
 

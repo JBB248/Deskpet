@@ -1,9 +1,8 @@
 package;
 
-import burst.BurstWindow;
 import burst.buddy.BuddySprite;
+import burst.ui.BurstWindow;
 
-import flixel.FlxG;
 import flixel.FlxState;
 
 class PlayState extends FlxState

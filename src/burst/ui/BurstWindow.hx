@@ -1,9 +1,11 @@
-package burst;
+package burst.ui;
 
-import flixel.FlxG;
+import burst.ui.frontend.Home;
+
 import flixel.FlxSprite;
 import flixel.addons.effects.chainable.FlxEffectSprite;
 import flixel.addons.effects.chainable.FlxOutlineEffect;
+import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
 import openfl.display.BitmapData;
@@ -11,7 +13,7 @@ import openfl.display.BitmapData;
 /**
  * Sort of misleading
  */
-class BurstWindow extends flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup<FlxSprite>
+class BurstWindow extends FlxTypedSpriteGroup<FlxSprite>
 {
     public static inline var DEFAULTWIDTH:Int = 640;
     public static inline var DEFAULTHEIGHT:Int = 480;
@@ -26,6 +28,8 @@ class BurstWindow extends flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup<FlxSpr
 
         windowSprite = new BurstWindowSprite();
         add(windowSprite);
+
+        var home = new Home("debug");
     }
 }
 

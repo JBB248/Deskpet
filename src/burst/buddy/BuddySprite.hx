@@ -3,7 +3,6 @@ package burst.buddy;
 import burst.fsm.StatefulSprite;
 import burst.fsm.states.*;
 
-import flixel.FlxG;
 import flixel.addons.util.FlxFSM;
 
 class BuddySprite extends StatefulSprite

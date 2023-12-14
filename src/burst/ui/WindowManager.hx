@@ -1,6 +1,5 @@
-package ui;
+package burst.ui;
 
-import flixel.FlxG;
 import lime.ui.Window;
 import openfl.Lib;
 

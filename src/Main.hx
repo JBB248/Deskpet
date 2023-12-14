@@ -1,10 +1,10 @@
 package;
 
-import flixel.FlxG;
+import burst.ui.WindowManager;
+
 import flixel.FlxGame;
 import openfl.display.Sprite;
 import openfl.system.Capabilities;
-import ui.WindowManager;
 
 class Main extends Sprite
 {
