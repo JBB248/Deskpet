@@ -1,19 +1,24 @@
-package ui;
+package burst.ui;
 
-import flixel.FlxG;
-import flixel.math.FlxPoint;
+import lime.ui.Window;
 import openfl.Lib;
-import openfl.system.Capabilities;
 
 @:cppFileCode(
     #if windows
-   '#define NOMINMAX
-    #include <windows.h>'
+   '#include <windows.h>
+    
+    #define NOMINMAX
+    #define MAINWIN "Deskpet"'
     #end
 )
 class WindowManager
 {
-	public static var resolution(default, null):FlxPoint = FlxPoint.get(FlxG.width, FlxG.height);
+	public static var resolution(default, never) = {width: 1920, height: 1080};
+
+    public static var window(get, never):Window;
+
+    @:noCompletion static inline function get_window():Window
+        return Lib.application.window;
 
     /**
      * The color used to clear the application background.
@@ -22,21 +27,22 @@ class WindowManager
      */
     public static var reserveColor(default, set):Int;
 
-    static function set_reserveColor(value:Int):Int
+    @:noCompletion static function set_reserveColor(color:Int):Int
     {
-        restorePixels();
-        removePixels((value >> 16) & 0xff, (value >> 8) & 0xff, value & 0xff);
+        // Ensure window is reset before removing new pixels
+        restorePixels(); 
+        // Pull rgb values from int "color"
+        removePixels((color >> 16) & 0xff, (color >> 8) & 0xff, color & 0xff);
 
-        return reserveColor = FlxG.cameras.bgColor = Lib.application.window.stage.color = value;
+        return reserveColor = FlxG.cameras.bgColor = Lib.application.window.stage.color = color;
     }
 
     @:allow(Main.new)
     static function init(color:Int = 0xFF010101)
     {
-		resolution = FlxPoint.get(Capabilities.screenResolutionX, Capabilities.screenResolutionY);
 		reserveColor = color;
-		resize(Std.int(resolution.x), Std.int(resolution.y));
-		move(0, 0);
+        move(0, 0);
+		resize(resolution.width, resolution.height);
 		setBorderless(true);
     }
 
@@ -47,14 +53,14 @@ class WindowManager
      */
     @:functionCode(
         #if windows
-       'HWND hWnd = GetActiveWindow();
+       'HWND hWnd = FindWindow(NULL, MAINWIN);
 
         SetWindowLongPtrW(hWnd, GWL_EXSTYLE, GetWindowLong(hWnd, GWL_EXSTYLE) | WS_EX_LAYERED);
         SetLayeredWindowAttributes(hWnd, RGB(red, green, blue), 0, LWA_COLORKEY);
         SetWindowPos(hWnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);'
         #end
     )
-    static function removePixels(red:Int = 0, green:Int = 0, blue:Int = 0):Void { }
+    @:noCompletion static function removePixels(red:Int = 0, green:Int = 0, blue:Int = 0):Void { }
 
 	/**
 	 * Sets all previously transparent pixels opaque
@@ -63,26 +69,26 @@ class WindowManager
 	 */
     @:functionCode(
         #if windows
-       'HWND hWnd = GetActiveWindow();
+       'HWND hWnd = FindWindow(NULL, MAINWIN);
 
         SetWindowLongPtrW(hWnd, GWL_EXSTYLE, GetWindowLong(hWnd, GWL_EXSTYLE) ^ WS_EX_LAYERED);
         RedrawWindow(hWnd, NULL, NULL, RDW_ERASE | RDW_INVALIDATE | RDW_FRAME);
         SetWindowPos(hWnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);'
         #end
     )
-	static function restorePixels():Void { }
-
-    /**
-     * Resizes the application window
-     */
-    public static inline function resize(width:Int, height:Int)
-        FlxG.resizeWindow(width, height);
+    @:noCompletion static function restorePixels():Void { }
 
 	/**
 	 * Moves the application window
 	 */
     public static inline function move(x:Int, y:Int)
         Lib.application.window.move(x, y);
+
+    /**
+     * Resizes the application window
+     */
+    public static inline function resize(width:Int, height:Int)
+        Lib.application.window.resize(width, height);
 
     /**
      * Adds or removes the window border depending on `value`.
@@ -115,6 +121,7 @@ class WindowManager
     /**
      * Gets the mouse x-position relative to the screen
      */
+    #if (!debug)
 	@:functionCode(
         #if windows 
        'POINT p;
@@ -123,14 +130,13 @@ class WindowManager
         return p.x;' 
         #end
     )
-	public static function getCursorX():Int
-	{
-		return -1;
-	}
+    #end
+	public static function getCursorX():Int return FlxG.mouse.screenX;
 
     /**
      * Gets the mouse y-position relative to the screen
      */
+    #if (!debug)
     @:functionCode(
         #if windows 
        'POINT p;
@@ -139,8 +145,6 @@ class WindowManager
         return p.y;' 
         #end
     )
-	public static function getCursorY():Int
-	{
-		return -1;
-	}
+    #end
+	public static function getCursorY():Int return FlxG.mouse.screenY;
 }

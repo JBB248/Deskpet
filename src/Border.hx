@@ -1,9 +1,11 @@
 package;
 
-import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
+/**
+ * Surrounds the screen and serves as the sprite's boundaries
+ */
 class Border extends FlxTypedGroup<FlxObject>
 {
     public var leftWall(get, never):FlxObject;
@@ -37,22 +39,14 @@ class Border extends FlxTypedGroup<FlxObject>
 	}
 
     function get_leftWall():FlxObject
-    {
         return members[0];
-    }
 
     function get_topWall():FlxObject
-    {
         return members[1];
-    }
 
 	function get_bottomWall():FlxObject
-	{
 		return members[2];
-	}
 
 	function get_rightWall():FlxObject
-	{
 		return members[3];
-	}
 }

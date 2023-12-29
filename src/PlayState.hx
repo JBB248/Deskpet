@@ -1,17 +1,15 @@
 package;
 
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.FlxState;
+import burst.buddy.BuddySprite;
 
-class PlayState extends FlxState
+class PlayState extends flixel.FlxState
 {
 	var buddy:BuddySprite;
 
 	override public function create()
 	{
 		#if debug
-		add(new FlxSprite(0, 0, AssetPaths.windows_xp_bliss__png));
+		add(new flixel.FlxSprite(0, 0, AssetPaths.windows_xp_bliss__png));
 		#end
 
 		buddy = new BuddySprite();
