@@ -28,7 +28,6 @@
 	<set name="BUILD_DIR" value="export/alpha" if="final"/>
 
 	<source path="src" />
-	<assets path="add-ons"/>
 	<assets path="assets" />
 
 	<!-- _______________________________ Libraries ______________________________ -->

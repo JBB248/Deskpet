@@ -1,11 +1,8 @@
 package;
 
 import burst.buddy.BuddySprite;
-import burst.ui.BurstWindow;
 
-import flixel.FlxState;
-
-class PlayState extends FlxState
+class PlayState extends flixel.FlxState
 {
 	var buddy:BuddySprite;
 
@@ -18,9 +15,6 @@ class PlayState extends FlxState
 		buddy = new BuddySprite();
 		buddy.screenCenter();
 		add(buddy);
-
-		var window = new BurstWindow(0, 0, "debug");
-		insert(members.indexOf(buddy), window);
 	}
 
 	override public function update(elapsed:Float)
