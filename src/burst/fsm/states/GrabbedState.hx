@@ -6,6 +6,11 @@ import flixel.FlxSprite;
 import flixel.addons.util.FlxFSM;
 import flixel.tweens.FlxTween;
 
+/**
+ * The grabbed state is active whenever the user has "grabbed" the sprite.
+ *
+ * This state may either return to the base state or switch to the bouncing state.
+ */
 class GrabbedState extends BaseState
 {
     public static inline var OSC:Float = 1.0;
@@ -14,10 +19,8 @@ class GrabbedState extends BaseState
 
     public static var shaken:Bool = false;
 
-    public static function grabbed(sprite:FlxSprite):Bool
-    {
+    public static inline function grabbed(sprite:FlxSprite):Bool
         return FlxG.mouse.pressed && FlxG.mouse.overlaps(sprite);
-    }
 
     var period:Float;
     var ticks:Int;
@@ -55,7 +58,7 @@ class GrabbedState extends BaseState
     }
 
     /**
-     * This _only_ checks for vertical shaking (up and down)
+     * This _only_ checks for vertical shaking
      */
     function isShaking():Bool
     {
@@ -63,7 +66,7 @@ class GrabbedState extends BaseState
 
         period += FlxG.elapsed;
         var velocity = FlxG.mouse.deltaScreenY / FlxG.elapsed;
-        if(velocity * lastVelocity < 0)
+        if(velocity * lastVelocity < 0) // Check if the sprite has changed direction
         {
             if(period <= GrabbedState.OSC) ticks++;
                period = 0;
@@ -82,9 +85,10 @@ class GrabbedState extends BaseState
     {
         if(GrabbedState.shaken) return;
         
+        // Match user's mouse's last velocity and gradually slow down sprite
         owner.velocity.x = FlxG.mouse.deltaScreenX / FlxG.elapsed;
         owner.velocity.y = FlxG.mouse.deltaScreenY / FlxG.elapsed;
-        owner.maxVelocity.set(1400, 1000);
+        owner.maxVelocity.set(FlxG.width * 0.7, FlxG.height * 0.7);
         owner.drag.x = Math.abs(owner.velocity.x) * 0.3;
     }
 }

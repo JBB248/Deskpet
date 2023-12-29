@@ -5,6 +5,9 @@ import flixel.addons.util.FlxFSM;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.util.FlxDestroyUtil;
 
+/**
+ * An extension of FlxSprite that manages its activities through a finite state machine
+ */
 class StatefulSprite extends FlxSprite
 {
     public var state(default, null):FlxFSM<StatefulSprite>;

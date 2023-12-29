@@ -21,10 +21,11 @@ class Main extends Sprite
 
 	function initWindow():Void
 	{
+		// Store the user's primary monitor resolution
 		WindowManager.resolution.width = Std.int(Capabilities.screenResolutionX);
 		WindowManager.resolution.height = Std.int(Capabilities.screenResolutionY);
 
-		addChild(new FlxGame(WindowManager.resolution.width, WindowManager.resolution.height, PlayState, true));
+		addChild(new FlxGame(1920, 1080, PlayState, true));
 
 		#if (debug)
 		WindowManager.resolution.width = 1280;

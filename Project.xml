@@ -4,7 +4,7 @@
 
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Deskpet" file="Deskpet" main="Main" version="0.0.1" company="JBB248"/>
+	<app title="Deskpet" file="Deskpet" main="Main" version="0.0.1" company="JBB248" packageName="com.github.jbb248.deskpet"/>
 
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
@@ -15,8 +15,8 @@
 
 	<!-- ____________________________ Window Settings ___________________________ -->
 
-	<window width="1280" height="720" fps="60" hardware="true" orientation="landscape"/>
-	<window width="1920" height="1080" alwaysOnTop="true" unless="debug"/>
+	<window width="1920" height="1080" fps="60" hardware="true" orientation="landscape" alwaysOnTop="true"/>
+	<window width="1280" height="720" alwaysOnTop="false" if="debug"/>
 
 	<!-- _____________________________ Path Settings ____________________________ -->
 
@@ -25,7 +25,7 @@
 	<set name="BUILD_DIR" value="export/beta-debug" if="debug"/>
 
 	<!-- Release build -->
-	<!-- <set name="BUILD_DIR" value="export/alpha" if="release"/> --> 
+	<set name="BUILD_DIR" value="export/alpha" if="final"/>
 
 	<source path="src" />
 	<assets path="add-ons"/>

@@ -5,6 +5,9 @@ import burst.fsm.states.*;
 
 import flixel.addons.util.FlxFSM;
 
+/**
+ * The outermost FlxSprite class which manages the sprite's graphics and collision
+ */
 class BuddySprite extends StatefulSprite
 {
     public static inline var GRAVITY:Float = 600;
@@ -18,10 +21,12 @@ class BuddySprite extends StatefulSprite
     {
         super(X, Y);
 
+        // Load the temporary pichu sprite
 		loadGraphic(AssetPaths.pichu__png, true, 175, 175);
 		animation.add("dance", [for (i in 0...44) i]);
 		animation.play("dance");
 
+        // Initilize physics values to defined constants
         acceleration.y = BuddySprite.GRAVITY;
         elasticity = BuddySprite.BOUNCINESS;
     }

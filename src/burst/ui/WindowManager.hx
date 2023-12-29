@@ -5,8 +5,10 @@ import openfl.Lib;
 
 @:cppFileCode(
     #if windows
-   '#define NOMINMAX
-    #include <windows.h>'
+   '#include <windows.h>
+    
+    #define NOMINMAX
+    #define MAINWIN "Deskpet"'
     #end
 )
 class WindowManager
@@ -25,12 +27,14 @@ class WindowManager
      */
     public static var reserveColor(default, set):Int;
 
-    @:noCompletion static function set_reserveColor(value:Int):Int
+    @:noCompletion static function set_reserveColor(color:Int):Int
     {
-        restorePixels();
-        removePixels((value >> 16) & 0xff, (value >> 8) & 0xff, value & 0xff);
+        // Ensure window is reset before removing new pixels
+        restorePixels(); 
+        // Pull rgb values from int "color"
+        removePixels((color >> 16) & 0xff, (color >> 8) & 0xff, color & 0xff);
 
-        return reserveColor = FlxG.cameras.bgColor = Lib.application.window.stage.color = value;
+        return reserveColor = FlxG.cameras.bgColor = Lib.application.window.stage.color = color;
     }
 
     @:allow(Main.new)
@@ -49,7 +53,7 @@ class WindowManager
      */
     @:functionCode(
         #if windows
-       'HWND hWnd = GetActiveWindow();
+       'HWND hWnd = FindWindow(NULL, MAINWIN);
 
         SetWindowLongPtrW(hWnd, GWL_EXSTYLE, GetWindowLong(hWnd, GWL_EXSTYLE) | WS_EX_LAYERED);
         SetLayeredWindowAttributes(hWnd, RGB(red, green, blue), 0, LWA_COLORKEY);
@@ -65,7 +69,7 @@ class WindowManager
 	 */
     @:functionCode(
         #if windows
-       'HWND hWnd = GetActiveWindow();
+       'HWND hWnd = FindWindow(NULL, MAINWIN);
 
         SetWindowLongPtrW(hWnd, GWL_EXSTYLE, GetWindowLong(hWnd, GWL_EXSTYLE) ^ WS_EX_LAYERED);
         RedrawWindow(hWnd, NULL, NULL, RDW_ERASE | RDW_INVALIDATE | RDW_FRAME);

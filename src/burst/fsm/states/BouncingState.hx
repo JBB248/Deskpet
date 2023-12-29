@@ -7,6 +7,11 @@ import flixel.FlxObject;
 import flixel.addons.util.FlxFSM;
 import flixel.tweens.FlxTween;
 
+/**
+ * While in the bouncing state, the sprite will bound off of anything it collides with.
+ *
+ * It may only return to the grabbed state.
+ */
 class BouncingState extends BaseState
 {
     public static inline var MINSPEEDX:Int = 300;
